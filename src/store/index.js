@@ -1,22 +1,31 @@
-import { useContext, useReducer } from "react";
-import { createContext } from "react";
+import { useReducer, useContext, createContext } from "react";
 import { counterInitialState } from "./counter/counter-initial-state";
 import { counterReducer } from "./counter/counter-reducer";
 
-//boş bir merkezi state oluşturuldu
-const storeContext = createContext();
-export const useStore = () => useContext(storeContext);
+// Boş bir merkezi state oluşturuldu
+const StoreContext = createContext();
 
-export const StoreProvider = ({ children }) => {
-        //useReducer hookuna reducer ve initials state parametre olarak verilir,
-        //useReducer fonksiyonu ise geriye setter ve getterları döner.
-
-//        getter        setter
-const [counterState,dispatchCounter] = useReducer(counterReducer,counterInitialState);
+// Componentlerde merkezi state e erişimi kolaylaştırmak için kendi hook umuzu yazdık
+export const useStore = () => useContext(StoreContext);
 
 
-  return(
-   <storeContext.Provider value={{}}>
-    {children}
-    </storeContext.Provider>)
-};
+
+export const StoreProvider = ({children}) => {
+    // useReducer hook una reducer ve initialstate parametre olarak verilir...
+    // useReducer fonksiyonu ise geriye setter ve getter ları döner.
+    //       getter          setter
+    const [counterState, dispatchCounter] = useReducer(counterReducer, counterInitialState);
+
+
+    return(
+        <StoreContext.Provider value={{counterState, dispatchCounter}}>
+            {children}
+        </StoreContext.Provider>
+
+    )
+
+
+}
+
+
+

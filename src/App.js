@@ -1,12 +1,14 @@
-import React from "react";
-import { StoreProvider } from "./store";
+import React from 'react'
+import HomePage from './pages/home-page'
+import { StoreProvider } from './store'
 
 const App = () => {
+  
   return (
     <StoreProvider>
-      <div>App</div>
+      <HomePage/>
     </StoreProvider>
-  );
-};
+  )
+}
 
-export default App;
+export default App
